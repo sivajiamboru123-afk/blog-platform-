@@ -1,0 +1,3 @@
+const jwt=require("jsonwebtoken");
+function requireAuth(req,res,next){const h=req.headers.authorization||"",t=h.startsWith("Bearer ")?h.slice(7):null;if(!t)return res.status(401).json({error:"Please log in first."});try{req.user=jwt.verify(t,process.env.JWT_SECRET||"dev-secret-change-me");next()}catch{return res.status(401).json({error:"Session expired. Please log in again."})}}
+module.exports={requireAuth};

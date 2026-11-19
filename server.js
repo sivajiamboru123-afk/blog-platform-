@@ -1,0 +1,4 @@
+require("dotenv").config();const express=require("express"),cors=require("cors"),helmet=require("helmet"),path=require("path"),app=express();const port=process.env.PORT||3000;
+app.use(helmet({contentSecurityPolicy:false}));app.use(cors());app.use(express.json());app.use(express.static(path.join(__dirname,"public")));
+app.get("/api/health",(q,s)=>s.json({status:"ok"}));app.use("/api/auth",require("./src/routes/auth"));app.use("/api/posts",require("./src/routes/posts"));app.use("/api/comments",require("./src/routes/comments"));
+app.get("*",(q,s)=>s.sendFile(path.join(__dirname,"public","index.html")));app.listen(port,()=>console.log(`Blog platform running at http://localhost:${port}`));
